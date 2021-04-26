@@ -16,7 +16,7 @@ public class backjoon1874 {
 
         for (int i = 0; i < count; i++) {
             int target = Integer.parseInt(sc.nextLine());
-            if (target > number) {
+            if (target >= number) {
                 for (int j = number; j < target + 1; j++) {
                     res.add("+");
                     temp.push(j);

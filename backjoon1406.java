@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
+import java.util.Stack;
 
 public class backjoon1406 {
     public static void main(String[] args) throws IOException {
@@ -13,42 +13,41 @@ public class backjoon1406 {
         String string = br.readLine();
         int count = Integer.parseInt(br.readLine());
 
-        ArrayList<Character> res = new ArrayList<Character>();
+        Stack<Character> leftStack = new Stack<Character>();
+        Stack<Character> rigthStack = new Stack<Character>();
 
         for (int i = 0; i < string.length(); i++) {
-            res.add(string.charAt(i));
+            leftStack.add(string.charAt(i));
         }
-        int index = res.size();
 
         for (int i = 0; i < count; i++) {
             String fullCmd = br.readLine();
             Character cmd = fullCmd.charAt(0);
             switch (cmd) {
                 case 'L':
-                    if (index > 0) {
-                        index--;
-                    }
+                    if (leftStack.size() > 0)
+                        rigthStack.add(leftStack.pop());
                     break;
                 case 'D':
-                    if (index < res.size()) {
-                        index++;
+                    if (rigthStack.size() > 0) {
+                        leftStack.add(rigthStack.pop());
                     }
                     break;
                 case 'P':
-                    res.add(index, fullCmd.charAt(2));
-                    index++;
+                    leftStack.add(fullCmd.charAt(2));
                     break;
                 case 'B':
-                    if (index > 0) {
-                        res.remove(index - 1);
-                        index--;
-                    }
+                    if (leftStack.size() > 0)
+                        leftStack.pop();
                     break;
                 default:
                     break;
             }
         }
-        for (Character character : res) {
+        while (!rigthStack.isEmpty()) {
+            leftStack.add(rigthStack.pop());
+        }
+        for (Character character : leftStack) {
             // System.out.print(character);
             bw.write(character);
         }

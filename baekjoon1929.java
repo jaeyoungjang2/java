@@ -17,11 +17,11 @@ public class baekjoon1929 {
             numbers[i] = Integer.parseInt(ary[i]);
         }
 
-        for (int i = 0; i <= numbers[1]; i++) {
+        for (int i = 2; i <= numbers[1]; i++) {
             allSet.add(i);
         }
 
-        for (int i = 2; i < Math.sqrt(numbers[1]); i++) {
+        for (int i = 2; i < Math.sqrt(numbers[1]) + 1; i++) {
             for (int j = i; j < numbers[1]; j++) {
                 if (j * i > numbers[1]) {
                     break;
@@ -34,7 +34,7 @@ public class baekjoon1929 {
         ArrayList<Integer> res = new ArrayList<Integer>(allSet);
         Collections.sort(res);
         for (int j = 0; j < res.size(); j++) {
-            if (numbers[0] <= res.get(j) && res.get(j) <= numbers[1]) {
+            if (numbers[0] <= res.get(j)) {
                 System.out.println(res.get(j));
             }
 

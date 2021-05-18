@@ -28,4 +28,13 @@ public class baekjoon17087 {
         System.out.println(res);
 
     }
+
+    static int GCD(int a, int b){
+        if (b == 0) {
+            return a
+        }
+        return GCD(b, a%b)
+    }
+    
 }
+

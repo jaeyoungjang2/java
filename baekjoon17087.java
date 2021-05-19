@@ -1,40 +1,32 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class baekjoon17087 {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] numb = br.readLine().split(" ");
-        int n = Integer.parseInt(numb[0]);
-        int s = Integer.parseInt(numb[1]);
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int c = sc.nextInt();
 
-        numb = br.readLine().split(" ");
-        int[] bro = new int[numb.length];
+        Stack<Integer> bro = new Stack<Integer>();
         for (int i = 0; i < n; i++) {
-            bro[i] = Integer.parseInt(numb[i]);
+            bro.add(Math.abs(sc.nextInt() - c));
         }
 
-        int res = 1000000000;
-        for (int i = 0; i < bro.length; i++) {
-            int length = s - bro[i];
-            if (length < 0) {
-                length = -length;
-            }
-            if (length < res) {
-                res = length;
-            }
+        int gcd = bro.pop();
+        while (bro.size() > 0) {
+            gcd = GCD(gcd, bro.pop());
         }
-        System.out.println(res);
-
+        System.out.println(gcd);
     }
 
-    static int GCD(int a, int b){
+    static int GCD(int a, int b) {
         if (b == 0) {
-            return a
+            return a;
         }
-        return GCD(b, a%b)
+        return GCD(b, a % b);
     }
-    
-}
 
+}

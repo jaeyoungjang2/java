@@ -17,9 +17,6 @@ public class baekjoon11052 {
             }
         }
         System.out.println(numbers[num]);
-        // for (int i : numbers) {
-        // System.out.println(i);
-        // }
 
     }
 }

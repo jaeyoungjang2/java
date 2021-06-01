@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class baekjoon11053 {
@@ -6,17 +5,27 @@ public class baekjoon11053 {
         Scanner sc = new Scanner(System.in);
         int num = sc.nextInt();
         int ary[] = new int[num];
-
-        ArrayList<Integer> indexList = new ArrayList<>();
-        int max = 0;
+        int aryIndex[] = new int[num];
         for (int i = 0; i < num; i++) {
-            int target = sc.nextInt();
-            if (target > max) {
-                indexList.add(i);
-                max = target;
+            ary[i] = sc.nextInt();
+            aryIndex[i] = 1;
+            for (int j = 0; j < i; j++) {
+                // 현재 값보다 작으면서 인덱스가 높으면 인덱스 += 1
+                if ((ary[i] > ary[j]) & (aryIndex[i] <= aryIndex[j])) {
+                    aryIndex[i] = aryIndex[j] + 1;
+                }
             }
         }
-        System.out.println(indexList.size());
-        System.out.println(indexList);
+
+        int res = 0;
+        for (int i : aryIndex) {
+            if (res < i) {
+                res = i;
+            }
+        }
+
+        System.out.println(res);
+
+        sc.close();
     }
 }

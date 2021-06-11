@@ -7,7 +7,7 @@ public class baekjoon2309 {
         Scanner sc = new Scanner(System.in);
 
         int nine[] = new int[9];
-        Stack<Integer> seven = new Stack<>();
+        int seven[] = new int[7];
         for (int i = 0; i < 9; i++) {
             nine[i] = sc.nextInt();
         }
@@ -16,16 +16,15 @@ public class baekjoon2309 {
 
     }
 
-    static void permutation(int[] nine, Stack seven, int num) {
+    static void permutation(int[] nine, int[] seven, int num) {
         int total = 0;
         if (num > 9) {
-            break;
+            return;
         }
         if (num == 9) {
-            while (seven.size() > 0) {
-                total += seven.pop();
-            }
+            return;
         }
+        System.out.println(Arrays.toString(seven));
         if (total == 100) {
             Arrays.sort(seven);
             for (int i = 0; i < seven.length; i++) {
@@ -33,11 +32,11 @@ public class baekjoon2309 {
             }
         }
         if (seven.length >= 7) {
-            break;
+            return;
         }
-        permutation(nine, seven, num+1);
-        seven[num] = nine[num];
-        
+        permutation(nine, seven, num + 1);
+        seven[seven.length] = nine[num];
+
         permutation(nine, seven, num);
     }
 }

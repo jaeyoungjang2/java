@@ -1,6 +1,5 @@
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class baekjoon2309 {
     public static void main(String[] args) {
@@ -12,31 +11,29 @@ public class baekjoon2309 {
             nine[i] = sc.nextInt();
         }
 
-        permutation(nine, seven, 0);
+        permutation(nine, seven, 0, 0);
 
     }
 
-    static void permutation(int[] nine, int[] seven, int num) {
+    static void permutation(int[] nine, int[] seven, int nineNum, int sevenNum) {
         int total = 0;
-        if (num > 9) {
-            return;
+
+        for (int i = 0; i < seven.length; i++) {
+            total += seven[i];
         }
-        if (num == 9) {
-            return;
-        }
-        System.out.println(Arrays.toString(seven));
-        if (total == 100) {
+        if (total == 100 && sevenNum == 7) {
             Arrays.sort(seven);
+
             for (int i = 0; i < seven.length; i++) {
                 System.out.println(seven[i]);
             }
         }
-        if (seven.length >= 7) {
+        if (nineNum >= 9 || sevenNum >= 7) {
             return;
         }
-        permutation(nine, seven, num + 1);
-        seven[seven.length] = nine[num];
 
-        permutation(nine, seven, num);
+        permutation(nine, seven, nineNum + 1, sevenNum);
+        seven[sevenNum] = nine[nineNum];
+        permutation(nine, seven, nineNum + 1, sevenNum + 1);
     }
 }

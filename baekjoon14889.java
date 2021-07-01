@@ -1,79 +1,81 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class baekjoon14889 {
-    static ArrayList<Integer> ary = new ArrayList<>();
-    static int[] posAry = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    static int[] negAry = { -1, -2, -3, -4, -5, -6, -7, -8, -9, -10 };
-
-    static int[] finalRes;
+    static char[][] qAry;
+    static int[] resAry;
+    static int num;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int num = sc.nextInt();
-        String test = sc.next();
+        num = sc.nextInt();
 
+        resAry = new int[num];
+        qAry = new char[num][num];
+
+        String q = sc.next();
         int count = 0;
-        char[][] info = new char[num][num];
-        int[] resAry = new int[num];
         for (int i = 0; i < num; i++) {
             for (int j = i; j < num; j++) {
-                info[i][j] = test.charAt(count);
+                qAry[i][j] = q.charAt(count);
                 count++;
             }
         }
-
-        permutation(0, info, resAry, num);
-        System.out.println(Arrays.toString(finalRes));
+        permutation(0);
 
     }
 
-    static boolean check(int num, int[] resAry, char[][] info) {
-        for (int i = 0; i < num; i++) {
-            int temp = 0;
-            for (int j = i; j < num; j++) {
-                temp += resAry[j];
-                if (info[i][j] == '+' && temp <= 0) {
-                    return false;
-                } else if (info[i][j] == '-' && temp >= 0) {
-                    return false;
-                } else if (info[i][j] == '0' && (temp > 0 || temp < 0)) {
+    static Boolean check(int index) {
+        int temp = 0;
+        for (int i = index; i >= 0; i--) {
+            temp += resAry[i];
+            if (qAry[i][index] == 0) {
+                if (temp != 0) {
                     return false;
                 }
-
+            } else if (qAry[i][index] == '+') {
+                if (temp <= 0) {
+                    return false;
+                }
+            } else if (qAry[i][index] == '-') {
+                if (temp >= 0) {
+                    return false;
+                }
             }
         }
         return true;
     }
 
-    static void permutation(int index, char[][] info, int[] resAry, int end) {
-        if (index == end) {
-            if (check(end, resAry, info)) {
-                for (int i = 0; i < resAry.length; i++) {
-                    System.out.print(resAry[i] + " ");
-                }
-                System.out.println();
-                System.exit(0);
+    static void permutation(int index) {
+        if (index == num) {
+            // toDo 완결 조건 마무리 하기
+            for (int i = 0; i < num; i++) {
+                System.out.print(resAry[i] + " ");
             }
+            System.out.println();
+            System.exit(0);
+
         }
 
-        if (info[index][index] == '+') {
-
-            for (int i = 0; i < posAry.length; i++) {
-                resAry[index] = posAry[i];
-                permutation(index + 1, info, resAry, end);
+        // if (qAry[index][index] == 0) {
+        // resAry[index] = 0;
+        // permutation(index + 1);
+        // } else if (qAry[index][index] == '+') {
+        // for (int i = 1; i <= 10; i++) {
+        // resAry[index] = i;
+        // if (check(index)) { permutation(index + 1); }
+        // }
+        // } else if (qAry[index][index] == '-') {
+        // for (int i = -1; i >= -10; i--) {
+        // resAry[index] = i;
+        // if (check(index)) { permutation(index + 1); }
+        // }
+        // }
+        for (int i = -10; i <= 10; i++) {
+            resAry[index] = i;
+            if (check(index)) {
+                permutation(index + 1);
             }
-        } else if (info[index][index] == '-') {
-            for (int i = 0; i < negAry.length; i++) {
-                resAry[index] = negAry[i];
-                permutation(index + 1, info, resAry, end);
-            }
-        } else {
-            resAry[index] = 0;
-            permutation(index + 1, info, resAry, end);
         }
-
     }
-
 }

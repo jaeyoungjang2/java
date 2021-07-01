@@ -29,7 +29,7 @@ public class baekjoon14889 {
         int temp = 0;
         for (int i = index; i >= 0; i--) {
             temp += resAry[i];
-            if (qAry[i][index] == 0) {
+            if (qAry[i][index] == '0') {
                 if (temp != 0) {
                     return false;
                 }

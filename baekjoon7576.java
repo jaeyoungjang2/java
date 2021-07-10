@@ -72,8 +72,6 @@ public class baekjoon7576 {
             res -= 1;
         }
         System.out.println(res);
-        System.out.println(Arrays.toString(dayAry[0]));
-        System.out.println(Arrays.toString(dayAry[1]));
 
         // 기준점에서 상, 하, 좌, 우에 존재하는 토마토를 숙성시킴
         // 숙성일은 기준점 날짜 + 1일

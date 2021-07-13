@@ -9,50 +9,54 @@ public class baekjoon16940 {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         ArrayList<Integer>[] info = new ArrayList[n + 1];
-        ArrayList<Integer>[] res = new ArrayList[n + 1];
-        Queue<Integer> q = new LinkedList<>();
         boolean[] visit = new boolean[n + 1];
-
-        for (int i = 0; i < n + 1; i++) {
+        int[] order = new int[n + 1];
+        int[] parent = new int[n + 1];
+        // 초기화
+        for (int i = 1; i < n + 1; i++) {
             info[i] = new ArrayList<>();
-            res[i] = new ArrayList<>();
             visit[i] = true;
         }
 
-        for (int i = 0; i < n - 1; i++) {
+        // 값 입력받기
+        for (int i = 1; i < n; i++) {
             int x = sc.nextInt();
             int y = sc.nextInt();
             info[x].add(y);
             info[y].add(x);
         }
 
-        q.add(1);
-        res[0].add(1);
-        visit[1] = false;
-        int count = 0;
+        for (int i = 1; i < n + 1; i++) {
+            order[i] = sc.nextInt();
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        q.add(order[1]);
+        visit[order[1]] = false;
+        int m = 1;
+
         while (!q.isEmpty()) {
-            count++;
-            int temp = q.poll();
-            for (int b : info[temp]) {
-                if (visit[b]) {
-                    visit[b] = false;
-                    q.add(b);
-                    res[count].add(b);
+            int x = q.remove();
+            int cnt = 0;
+            for (Integer y : info[x]) {
+                if (visit[y]) {
+                    visit[y] = false;
+                    parent[y] = x;
+                    cnt++;
                 }
             }
-        }
-        System.out.println(res[0]);
-        System.out.println(res[1]);
-        System.out.println(res[2]);
-        System.out.println(res[3]);
-
-        for (int i = 0; i < n; i++) {
-            if (res[i].size() == 0) {
-                continue;
+            for (int i = 1; i < cnt + 1; i++) {
+                if (parent[order[m + i]] != x) {
+                    System.out.println(0);
+                    System.exit(0);
+                } else if (parent[order[m + 1]] == x) {
+                    q.add(order[m + 1]);
+                }
             }
-            boolean isTrue = false;
-
+            m += cnt;
         }
+        System.out.println(1);
+
     }
 
 }

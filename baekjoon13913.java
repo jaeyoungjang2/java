@@ -23,10 +23,11 @@ public class baekjoon13913 {
         int[] time = new int[max];
         int[] dist = new int[max];
         boolean[] visit = new boolean[max];
-        visit[5] = true;
+
         Scanner sc = new Scanner(System.in);
         int x = sc.nextInt();
         int y = sc.nextInt();
+        visit[x] = true;
 
         Queue<Integer> q = new LinkedList<>();
         q.add(x);
@@ -60,13 +61,11 @@ public class baekjoon13913 {
         stack.add(y);
         int tempY = y;
 
-        while (true) {
+        while (tempY != x) {
             tempY = dist[tempY];
-            if (tempY == 0) {
-                break;
-            }
             stack.add(tempY);
         }
+
         System.out.println(time[y]);
         while (!stack.isEmpty()) {
             int temp = stack.pop();

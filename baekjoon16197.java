@@ -1,95 +1,102 @@
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class baekjoon16197 {
+    static int[] aryH = { 0, 0, -1, 1 };
+    static int[] aryW = { -1, 1, 0, 0 };
     static int n;
     static int m;
-    static int[][] info;
-    static int res = 0;
+    static int res = -1;
+    static String[][] info;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();
-        info = new int[n][m];
+        int h1 = 0;
+        int w1 = 0;
+        int h2 = 0;
+        int w2 = 0;
+        boolean firstCoin = true;
+        boolean[][][] visit = new boolean[n][m][2];
+        info = new String[n][m];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                info[i][j] = sc.nextInt();
+            String[] tempAry = sc.next().split("");
+            for (int j = 0; j < tempAry.length; j++) {
+                info[i][j] = tempAry[j];
+                if (tempAry[j].equals("o") && firstCoin) {
+                    h1 = i;
+                    w1 = j;
+                    firstCoin = false;
+                } else if (tempAry[j].equals("o") && !firstCoin) {
+                    h2 = i;
+                    w2 = j;
+                }
             }
         }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                findMaxSum(i, j);
-            }
-        }
+        coinTracking(new CoinPosition(h1, w1, h2, w2), 1);
         System.out.println(res);
+
     }
 
-    static void findMaxSum(int h, int w) {
-        // case1
-        if (w + 3 < m) {
-            int temp = info[h][w] + info[h][w + 1] + info[h][w + 2] + info[h][w + 3];
-            res = Math.max(res, temp);
+    static void coinTracking(CoinPosition cp, int cnt) {
+        int curH1 = cp.h1;
+        int curW1 = cp.w1;
+        int curH2 = cp.h2;
+        int curW2 = cp.w2;
+        if (cnt >= 10) {
+            return;
         }
-        // case1_2
-        if (h + 3 < n) {
-            int temp = info[h][w] + info[h + 1][w] + info[h + 2][w] + info[h + 3][w];
-            res = Math.max(res, temp);
+
+        for (int i = 0; i < 4; i++) {
+            int canFall = 0;
+            int nextH1 = curH1 + aryH[i];
+            int nextW1 = curW1 + aryW[i];
+            int nextH2 = curH2 + aryH[i];
+            int nextW2 = curW2 + aryW[i];
+
+            // 첫번째 코인이 떨어지는 경우
+            if (nextH1 < 0 || nextH1 >= n || nextW1 < 0 || nextW1 >= m) {
+                canFall++;
+            } else if (info[nextH1][nextW1].equals("#")) {
+                nextH1 = curH1;
+                nextW1 = curW1;
+            }
+            // 두번째 코인이 떨어지는 경우
+            if (nextH2 < 0 || nextH2 >= n || nextW2 < 0 || nextW2 >= m) {
+                canFall++;
+            } else if (info[nextH2][nextW2].equals("#")) {
+                nextH2 = curH2;
+                nextW2 = curW2;
+            }
+
+            // 하나만 떨어진 경우
+            if (canFall == 1) {
+                if (res == -1) {
+                    res = cnt;
+                } else {
+                    res = Math.min(res, cnt);
+                }
+            } else if (canFall == 0) {
+                coinTracking(new CoinPosition(nextH1, nextW1, nextH2, nextW2), cnt + 1);
+            }
         }
-        // case2
-        if (h + 1 < n && w + 1 < m) {
-            int temp = info[h][w] + info[h + 1][w] + info[h + 1][w + 1] + info[h][w + 1];
-            res = Math.max(res, temp);
-        }
-        // case3
-        if (h + 2 < n && w + 1 < m) {
-            int temp = info[h][w] + info[h + 1][w] + info[h + 2][w] + info[h + 2][w + 1];
-            res = Math.max(res, temp);
-        }
-        // case3_2
-        if (h + 1 < n && w + 2 < m) {
-            int temp = info[h + 1][w] + info[h + 1][w + 1] + info[h + 1][w + 2] + info[h][w + 2];
-            res = Math.max(res, temp);
-        }
-        // case3_3
-        if (h + 2 < n && w + 1 < m) {
-            int temp = info[h][w] + info[h][w + 1] + info[h + 1][w + 1] + info[h + 2][w + 1];
-            res = Math.max(res, temp);
-        }
-        // case3_4
-        if (h + 1 < n && w + 2 < m) {
-            int temp = info[h][w] + info[h][w + 1] + info[h][w + 2] + info[h + 1][w + 2];
-            res = Math.max(res, temp);
-        }
-        // case4
-        if (h + 2 < n && w + 1 < m) {
-            int temp = info[h][w] + info[h + 1][w] + info[h + 1][w + 1] + info[h + 2][w + 1];
-            res = Math.max(res, temp);
-        }
-        // case4_1
-        if (h + 1 < n && w + 2 < m) {
-            int temp = info[h + 1][w] + info[h + 1][w + 1] + info[h][w + 1] + info[h][w + 2];
-            res = Math.max(res, temp);
-        }
-        // case5
-        if (h + 1 < n && w + 2 < m) {
-            int temp = info[h][w] + info[h][w + 1] + info[h][w + 2] + info[h + 1][w + 1];
-            res = Math.max(res, temp);
-        }
-        // case5_2
-        if (h + 1 < n && w + 2 < m) {
-            int temp = info[h + 1][w] + info[h + 1][w + 1] + info[h + 1][w + 2] + info[h][w + 1];
-            res = Math.max(res, temp);
-        }
-        // case5_3
-        if (h + 2 < n && w + 1 < m) {
-            int temp = info[h][w] + info[h + 1][w] + info[h + 2][w] + info[h + 1][w + 1];
-            res = Math.max(res, temp);
-        }
-        // case5_4
-        if (h + 2 < n && w + 1 < m) {
-            int temp = info[h][w + 1] + info[h + 1][w + 1] + info[h + 2][w + 1] + info[h][w + 1];
-            res = Math.max(res, temp);
-        }
+
+    }
+}
+
+class CoinPosition {
+    int h1;
+    int w1;
+    int h2;
+    int w2;
+
+    CoinPosition(int h1, int w1, int h2, int w2) {
+        this.h1 = h1;
+        this.w1 = w1;
+        this.h2 = h2;
+        this.w2 = w2;
     }
 }

@@ -20,14 +20,18 @@ public class ExceptionEx3 {
         }
     }
 
-    static void second() throws Exception {
-        try {
-            throw new Exception("제가 강제로 예외 발생시켰어요!!!");
-        } catch (Exception e) {
-            System.out.println("second class에서 예외 처리중!!!");
-            throw e;
-            // TODO: handle exception
-        }
+    static void second() {
+        // try {
+        // throw new Exception("제가 강제로 예외 발생시켰어요!!!");
+        // } catch (Exception e) {
+        // System.out.println("second class에서 예외 처리중!!!");
+        // throw e;
+        // // TODO: handle exception
+        // }
+        System.out.println("Second class 예외발생");
+        // throw new Exception("제가 강제로 예외 발생시켰어요!!!");
+        throw new IllegalArgumentException("예외발생!");
+
     }
 }
 

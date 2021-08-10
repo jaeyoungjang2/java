@@ -29,25 +29,37 @@ public class baekjoon12100 {
     }
 
     static void run(int count) {
-        if (count == 1) {
+        if (count == 5) {
             findMaxCount(info);
             return;
         }
         int copy[][] = new int[n][n];
 
-        copy = info.clone();
+        for (int i = 0; i < n; i++) {
+            copy[i] = info[i].clone();
+        }
+        // System.out.println("count:" + count);
         moveUp(info);
         run(count + 1);
-        info = copy.clone();
-        // moveDown(info);
-        // run(count + 1);
-        // info = copy.clone();
-        // moveLeft(info);
-        // run(count + 1);
-        // info = copy.clone();
-        // moveRight(info);
-        // run(count + 1);
-        // info = copy.clone();
+        for (int i = 0; i < n; i++) {
+            info[i] = copy[i].clone();
+        }
+        // System.out.println("count:" + count);
+        moveDown(info);
+        run(count + 1);
+        for (int i = 0; i < n; i++) {
+            info[i] = copy[i].clone();
+        }
+        moveLeft(info);
+        run(count + 1);
+        for (int i = 0; i < n; i++) {
+            info[i] = copy[i].clone();
+        }
+        moveRight(info);
+        run(count + 1);
+        for (int i = 0; i < n; i++) {
+            info[i] = copy[i].clone();
+        }
     }
 
     static void findMaxCount(int[][] infoArray) {
@@ -59,138 +71,120 @@ public class baekjoon12100 {
                 }
             }
         }
+        // System.out.println(Arrays.toString(infoArray[0]));
+        // System.out.println(Arrays.toString(infoArray[1]));
+        // System.out.println(Arrays.toString(infoArray[2]));
     }
 
     static void moveUp(int[][] infoArray) {
-        System.out.println(Arrays.toString(infoArray[0]));
-        System.out.println(Arrays.toString(infoArray[1]));
-        System.out.println(Arrays.toString(infoArray[2]));
-        System.out.println(Arrays.toString(infoArray[3]));
-        System.out.println();
+
         for (int i = 0; i < n; i++) {
             int index = 0;
-            for (int j = 1; j < n; j++) {
-                if (infoArray[j][i] == 0) {
-                    continue;
+            int block = 0;
+            for (int j = 0; j < n; j++) {
+                if (infoArray[j][i] != 0) {
+                    if (block == infoArray[j][i]) {
+                        infoArray[index - 1][i] = block * 2;
+                        block = 0;
+                        infoArray[j][i] = 0;
+                    } else {
+                        block = infoArray[j][i];
+                        infoArray[j][i] = 0;
+                        infoArray[index][i] = block;
+                        index++;
+                    }
                 }
-
-                // 현재 숫자가 0이 아닌 경우
-                // index의 숫자와 같은 경우 ( 합치고 , idnex 번호 수정하고, 기존 자리 값 0으로 변환)
-                if (infoArray[j][i] == infoArray[index][i]) {
-                    infoArray[index][i] = infoArray[j][i] + infoArray[index][i];
-                    infoArray[j][i] = 0;
-                    index++;
-                    continue;
-                }
-                // index의 숫자와 다른 경우
-                if (infoArray[index][i] == 0) {
-                    infoArray[index][i] = infoArray[j][i];
-                    infoArray[j][i] = 0;
-                    continue;
-                }
-                index++;
             }
         }
         // System.out.println(Arrays.toString(infoArray[0]));
         // System.out.println(Arrays.toString(infoArray[1]));
         // System.out.println(Arrays.toString(infoArray[2]));
         // System.out.println(Arrays.toString(infoArray[3]));
+        // System.out.println("UP");
+        // System.out.println();
     }
 
     static void moveDown(int[][] infoArray) {
 
         for (int i = 0; i < n; i++) {
             int index = n - 1;
-            for (int j = n - 2; j >= 0; j--) {
-                if (infoArray[j][i] == 0) {
-                    continue;
+            int block = 0;
+            for (int j = n - 1; j >= 0; j--) {
+                if (infoArray[j][i] != 0) {
+                    if (block == infoArray[j][i]) {
+                        infoArray[index + 1][i] = block * 2;
+                        block = 0;
+                        infoArray[j][i] = 0;
+                    } else {
+                        block = infoArray[j][i];
+                        infoArray[j][i] = 0;
+                        infoArray[index][i] = block;
+                        index--;
+                    }
                 }
-
-                // 현재 숫자가 0이 아닌 경우
-                // index의 숫자와 같은 경우 ( 합치고 , idnex 번호 수정하고, 기존 자리 값 0으로 변환)
-                if (infoArray[j][i] == infoArray[index][i]) {
-                    infoArray[index][i] = infoArray[j][i] + infoArray[index][i];
-                    infoArray[j][i] = 0;
-                    index--;
-                    continue;
-                }
-                // index의 숫자와 다른 경우
-                if (infoArray[index][i] == 0) {
-                    infoArray[index][i] = infoArray[j][i];
-                    infoArray[j][i] = 0;
-                    continue;
-                }
-                index--;
             }
         }
         // System.out.println(Arrays.toString(infoArray[0]));
         // System.out.println(Arrays.toString(infoArray[1]));
         // System.out.println(Arrays.toString(infoArray[2]));
         // System.out.println(Arrays.toString(infoArray[3]));
+        // System.out.println("DOWN");
+
+        // System.out.println();
     }
 
     static void moveLeft(int[][] infoArray) {
 
         for (int i = 0; i < n; i++) {
             int index = 0;
-            for (int j = 1; j < n; j++) {
-                if (infoArray[i][j] == 0) {
-                    continue;
+            int block = 0;
+            for (int j = 0; j < n; j++) {
+                if (infoArray[i][j] != 0) {
+                    if (block == infoArray[i][j]) {
+                        infoArray[i][index - 1] = block * 2;
+                        block = 0;
+                        infoArray[i][j] = 0;
+                    } else {
+                        block = infoArray[i][j];
+                        infoArray[i][j] = 0;
+                        infoArray[i][index] = block;
+                        index++;
+                    }
                 }
-
-                // 현재 숫자가 0이 아닌 경우
-                // index의 숫자와 같은 경우 ( 합치고 , idnex 번호 수정하고, 기존 자리 값 0으로 변환)
-                if (infoArray[i][j] == infoArray[i][index]) {
-                    infoArray[i][index] = infoArray[i][j] + infoArray[i][index];
-                    infoArray[i][j] = 0;
-                    index++;
-                    continue;
-                }
-                // index의 숫자와 다른 경우
-                if (infoArray[i][index] == 0) {
-                    infoArray[i][index] = infoArray[i][j];
-                    infoArray[i][j] = 0;
-                    continue;
-                }
-                index++;
             }
         }
         // System.out.println(Arrays.toString(infoArray[0]));
         // System.out.println(Arrays.toString(infoArray[1]));
         // System.out.println(Arrays.toString(infoArray[2]));
-        // System.out.println(Arrays.toString(infoArray[3]));
+        // // System.out.println(Arrays.toString(infoArray[3]));
+        // System.out.println();
     }
 
     static void moveRight(int[][] infoArray) {
 
         for (int i = 0; i < n; i++) {
             int index = n - 1;
-            for (int j = n - 2; j >= 0; j--) {
-                if (infoArray[i][j] == 0) {
-                    continue;
+            int block = 0;
+            for (int j = n - 1; j >= 0; j--) {
+                if (infoArray[i][j] != 0) {
+                    if (block == infoArray[i][j]) {
+                        infoArray[i][index + 1] = block * 2;
+                        block = 0;
+                        infoArray[i][j] = 0;
+                    } else {
+                        block = infoArray[i][j];
+                        infoArray[i][j] = 0;
+                        infoArray[i][index] = block;
+                        index--;
+                    }
                 }
-
-                // 현재 숫자가 0이 아닌 경우
-                // index의 숫자와 같은 경우 ( 합치고 , idnex 번호 수정하고, 기존 자리 값 0으로 변환)
-                if (infoArray[i][j] == infoArray[i][index]) {
-                    infoArray[i][index] = infoArray[i][j] + infoArray[i][index];
-                    infoArray[i][j] = 0;
-                    index--;
-                    continue;
-                }
-                // index의 숫자와 다른 경우
-                if (infoArray[i][index] == 0) {
-                    infoArray[i][index] = infoArray[i][j];
-                    infoArray[i][j] = 0;
-                    continue;
-                }
-                index--;
             }
         }
         // System.out.println(Arrays.toString(infoArray[0]));
         // System.out.println(Arrays.toString(infoArray[1]));
         // System.out.println(Arrays.toString(infoArray[2]));
-        // System.out.println(Arrays.toString(infoArray[3]));
+        // // System.out.println(Arrays.toString(infoArray[3]));
+        // System.out.println();
     }
 
 }

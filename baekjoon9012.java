@@ -2,13 +2,6 @@ import java.util.Scanner;
 
 public class baekjoon9012 {
     public static void main(String[] args) {
-        // 6
-        // (())())
-        // (((()())()
-        // (()())((()))
-        // ((()()(()))(((())))()
-        // ()()()()(()()())()
-        // (()((())()(
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         for (int i = 0; i < n; i++) {

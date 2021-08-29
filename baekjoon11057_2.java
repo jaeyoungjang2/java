@@ -21,5 +21,7 @@ public class baekjoon11057_2 {
             res %= 10007;
         }
         System.out.println(res);
+        System.out.println(res);
+        System.out.println(res);
     }
 }

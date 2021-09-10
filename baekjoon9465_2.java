@@ -25,6 +25,5 @@ public class baekjoon9465_2 {
             }
             System.out.println(Math.max(info[column - 1][0], info[column - 1][1]));
         }
-
     }
 }

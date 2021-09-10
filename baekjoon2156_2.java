@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class baekjoon2156_2 {
@@ -33,7 +32,8 @@ public class baekjoon2156_2 {
 
         drinkInfo[0][1] = info[0];
         for (int i = 1; i < drinkInfo.length; i++) {
-            drinkInfo[i][0] = Math.max(drinkInfo[i - 1][2], drinkInfo[i - 1][1]);
+            int beforeDrink = Math.max(drinkInfo[i - 1][2], drinkInfo[i - 1][1]);
+            drinkInfo[i][0] = Math.max(beforeDrink, drinkInfo[i - 1][0]);
             drinkInfo[i][1] = drinkInfo[i - 1][0] + info[i];
             drinkInfo[i][2] = drinkInfo[i - 1][1] + info[i];
         }

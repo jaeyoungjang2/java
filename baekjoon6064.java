@@ -6,32 +6,38 @@ public class baekjoon6064 {
         int num = sc.nextInt();
 
         for (int i = 0; i < num; i++) {
-            int count = 1;
+
             int m = sc.nextInt();
             int n = sc.nextInt();
             int x = sc.nextInt();
             int y = sc.nextInt();
 
-            while (count <= 80_000) {
-                int tempX = count % m;
-                int tempY = count % n;
-                if (tempX == 0) {
-                    tempX = m;
-                }
-                if (tempY == 0) {
-                    tempY = n;
-                }
-                if (tempX == x && tempY == y) {
+            int gcd = GCD(m, n);
+            int lcd = m * n / gcd;
+
+            boolean isTrue = false;
+
+            for (int j = x; j <= lcd; j += m) {
+                int tempY = j % n == 0 ? n : j % n;
+                if (tempY == y) {
+                    isTrue = true;
+                    System.out.println(j);
                     break;
                 }
-                count++;
             }
 
-            if (count == 80_001) {
+            if (!isTrue) {
                 System.out.println(-1);
-            } else {
-                System.out.println(count);
             }
         }
+    }
+
+    static Integer GCD(int a, int b) {
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+        return a;
     }
 }

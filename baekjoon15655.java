@@ -21,7 +21,6 @@ public class baekjoon15655 {
         m = Integer.parseInt(st.nextToken());
 
         res = new int[m];
-        visit = new boolean[n];
         String[] string = br.readLine().split(" ");
         info = Arrays.stream(string).map(s -> Integer.parseInt(s)).sorted().collect(Collectors.toList());
 
@@ -40,7 +39,7 @@ public class baekjoon15655 {
 
         for (int i = start; i < n; i++) {
             res[index] = info.get(i);
-            combination15653(index + 1, start);
+            combination15653(index + 1, i);
         }
     }
 }

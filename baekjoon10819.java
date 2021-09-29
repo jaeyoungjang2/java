@@ -1,56 +1,55 @@
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class baekjoon10819 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
+    private static int n;
+    private static int[] info;
+    private static int[] res;
+    private static boolean[] visit;
+    private static int result = 0;
 
-        List<Integer> list = new ArrayList<>();
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+        info = new int[n];
+        res = new int[n];
+        visit = new boolean[n];
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            list.add(sc.nextInt());
+            info[i] = Integer.parseInt(st.nextToken());
+        }
+        allPermutation10819(0);
+        System.out.println(result);
+    }
+
+    private static void allPermutation10819(int index) {
+        if (index == n) {
+            // toDo : calculate result
+            int tempResult = 0;
+            int first = res[0];
+            for (int i = 1; i < n; i++) {
+                int second = res[i];
+                tempResult += Math.abs(second - first);
+                first = second;
+            }
+            if (tempResult > result) {
+                result = tempResult;
+            }
+            return;
         }
 
-        list = list.stream().sorted().collect(Collectors.toList());
-
-        int firstIndex = 0;
-        int lastIndex = n - 1;
-
-        ArrayDeque<Integer> dq = new ArrayDeque<>();
-        dq.addLast(list.get(lastIndex));
-        lastIndex--;
-        dq.addLast(list.get(firstIndex));
-        firstIndex++;
-
-        while (firstIndex <= lastIndex) {
-            if (Math.abs(dq.getFirst() - list.get(firstIndex)) >= Math.abs(dq.getLast() - list.get(firstIndex))) {
-                dq.addFirst(list.get(firstIndex));
-            } else {
-                dq.addLast(list.get(firstIndex));
+        for (int i = 0; i < n; i++) {
+            if (!visit[i]) {
+                visit[i] = true;
+                res[index] = info[i];
+                allPermutation10819(index + 1);
+                visit[i] = false;
             }
-            firstIndex++;
-            if (firstIndex > lastIndex) {
-                break;
-            }
-            if (Math.abs(dq.getFirst() - list.get(lastIndex)) <= Math.abs(dq.getLast() - list.get(lastIndex))) {
-                dq.addLast(list.get(lastIndex));
-            } else {
-                dq.addFirst(list.get(lastIndex));
-            }
-            lastIndex--;
+
         }
 
-        int res = 0;
-        int first = dq.removeFirst();
-        while (!dq.isEmpty()) {
-            int second = dq.removeFirst();
-            res += Math.abs(first - second);
-            first = second;
-
-        }
-        System.out.println(res);
     }
 }

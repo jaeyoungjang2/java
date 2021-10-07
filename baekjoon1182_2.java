@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class baekjoon1182_2 {
@@ -26,6 +27,7 @@ public class baekjoon1182_2 {
         }
         permutation1182(0, 0);
         System.out.println(count);
+
     }
 
     private static void permutation1182(int index, int start) {

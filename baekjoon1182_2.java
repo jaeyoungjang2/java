@@ -27,7 +27,6 @@ public class baekjoon1182_2 {
         }
         permutation1182(0, 0);
         System.out.println(count);
-        permutation1182(index, start);
 
     }
 

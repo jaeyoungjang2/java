@@ -1,59 +1,22 @@
-import java.util.Scanner;
-
-public class Test2 {
-    static int N;
-    static char[][] matrix;
-    static int[] data;
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-
-        matrix = new char[N][N];
-        String str = sc.next();
-        int idx = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = i; j < N; j++) {
-                matrix[i][j] = str.charAt(idx++);
-            }
-        }
-
-        data = new int[N];
-        solve(0);
+class Test2 {
+    private static void swap(Integer a, Integer b) {
+        Integer temp = a;
+        a = b;
+        b = temp;
     }
 
-    private static void solve(int depth) {
-        if (depth == N) {
-            for (int i : data) {
-                System.out.print(i + " ");
-            }
-            System.out.println();
-            System.exit(0); // 프로그램 종료
-        }
-        for (int i = 1; i <= 10; i++) {
-            data[depth] = i;
-            if (check(depth)) {
-                solve(depth + 1);
-            }
-        }
-        for (int i = 0; i >= -10; i--) {
-            data[depth] = i;
-            if (check(depth)) {
-                solve(depth + 1);
-            }
-        }
-    }
+    public static void main(String args[]) {
+        Integer a = new Integer(1);
+        Integer b = new Integer(2);
 
-    private static boolean check(int idx) {
-        for (int i = 0; i <= idx; i++) {
-            int sum = 0;
-            for (int j = i; j <= idx; j++) {
-                sum += data[j];
-                if (matrix[i][j] != (sum == 0 ? '0' : (sum > 0 ? '+' : '-'))) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        System.out.println("a => " + a.intValue());
+        System.out.println("b => " + b.intValue());
+
+        swap(a, b);
+
+        System.out.println("------- swap 후 -------");
+
+        System.out.println("a => " + a.intValue());
+        System.out.println("b => " + b.intValue());
     }
 }

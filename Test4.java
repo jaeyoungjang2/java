@@ -4,7 +4,7 @@ public class Test4 {
         System.out.println(score.getScore());
         System.out.println(score.hashCode());
         newTest(score);
-        System.out.println("------- score 수정 -------");
+        System.out.println("------- score 수정 --------");
         System.out.println(score.getScore());
     }
 

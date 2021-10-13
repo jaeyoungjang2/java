@@ -1,4 +1,3 @@
-import java.beans.Visibility;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,35 +29,38 @@ public class baekjoon11724_2 {
         int from;
         int to;
 
-        // 단방향 간선 정보 입력
+        // 양방향 간선 정보 입력
         for (int i = 0; i < edge; i++) {
             st = new StringTokenizer(br.readLine());
             from = Integer.parseInt(st.nextToken());
             to = Integer.parseInt(st.nextToken());
             info.get(from).add(to);
+            info.get(to).add(from);
         }
 
-        for (int i = 0; i < vertex + 1; i++) {
-            bfs(i, info);
+        for (int i = 1; i < vertex + 1; i++) {
+            if (!visit[i]) {
+                result++;
+                bfs(i, info);
+            }
         }
         System.out.println(result);
     }
 
     private static void bfs(int currentVertex, ArrayList<ArrayList<Integer>> info) {
         Queue<Integer> queue = new LinkedList<>();
-        if (!visit[currentVertex]) {
-            System.out.println(currentVertex);
-            queue.add(currentVertex);
-            while (!queue.isEmpty()) {
-                currentVertex = queue.remove();
-                visit[currentVertex] = true;
-                for (Integer nextVertex : info.get(currentVertex)) {
-                    if (!visit[nextVertex]) {
-                        queue.add(nextVertex);
-                    }
+        queue.add(currentVertex);
+        visit[currentVertex] = true;
+
+        while (!queue.isEmpty()) {
+            currentVertex = queue.remove();
+            
+            for (Integer nextVertex : info.get(currentVertex)) {
+                if (!visit[nextVertex]) {
+                    visit[nextVertex] = true;
+                    queue.add(nextVertex);
                 }
             }
-            result++;
         }
     }
 }

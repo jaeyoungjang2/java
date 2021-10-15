@@ -29,7 +29,7 @@ public class baekjoon11724_2 {
         int from;
         int to;
 
-        // 양방향 간선 정보 입력
+        // 양방향 간선 정보 입력!!
         for (int i = 0; i < edge; i++) {
             st = new StringTokenizer(br.readLine());
             from = Integer.parseInt(st.nextToken());

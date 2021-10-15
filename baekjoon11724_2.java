@@ -54,7 +54,7 @@ public class baekjoon11724_2 {
 
         while (!queue.isEmpty()) {
             currentVertex = queue.remove();
-            
+
             for (Integer nextVertex : info.get(currentVertex)) {
                 if (!visit[nextVertex]) {
                     visit[nextVertex] = true;

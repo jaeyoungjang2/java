@@ -21,7 +21,7 @@ public class baekjoon2718 {
         targetRow = Integer.parseInt(st.nextToken());
         targetCol = Integer.parseInt(st.nextToken());
 
-        // 미로 정보를 담을 공간 초기화
+        // 미로 정보를 담을 공간 초기화!!
         info = new int[targetRow][targetCol];
         // 방문 여부 확인
         visit = new boolean[targetRow][targetCol];

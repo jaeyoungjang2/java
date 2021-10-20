@@ -65,6 +65,7 @@ public class baekjoon16947 {
                 }
             }
         }
+        System.out.println(Arrays.toString(isCycle));
         System.out.println();
     }
 

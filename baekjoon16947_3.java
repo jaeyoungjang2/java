@@ -18,11 +18,6 @@ public class baekjoon16947_3 {
     private static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws NumberFormatException, IOException {
-        // 4
-        // 1 3
-        // 4 3
-        // 4 2
-        // 1 2
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         distInfo = new int[n + 1];
@@ -82,7 +77,6 @@ public class baekjoon16947_3 {
     }
 
     private static void findCycle16947(Stack<Integer> stack, int currentStation) {
-
         for (Integer nextStation : info.get(currentStation)) {
             // toDo : calculate result;
             if (visit[nextStation] && Math.abs(distInfo[nextStation] - distInfo[currentStation]) >= 2) {
@@ -93,7 +87,6 @@ public class baekjoon16947_3 {
                     isCycle[stack.get(endIndex)] = true;
                     endIndex--;
                 }
-                return;
             }
 
             if (!visit[nextStation]) {

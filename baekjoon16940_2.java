@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -73,13 +72,12 @@ public class baekjoon16940_2 {
 
             for (int i = 0; i < count; i++) {
                 int expectBfsNumber = expect[checkIndex];
-                if (parent[expectBfsNumber] == currentBfsNumber) {
-                    queue.add(expectBfsNumber);
-                    checkIndex++;
-                    continue;
+                if (parent[expectBfsNumber] != currentBfsNumber) {
+                    System.out.println(0);
+                    System.exit(0);
                 }
-                System.out.println(0);
-                System.exit(0);
+                queue.add(expectBfsNumber);
+                checkIndex++;
             }
 
         }

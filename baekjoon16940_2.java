@@ -14,11 +14,6 @@ public class baekjoon16940_2 {
     private static int[] parent;
 
     public static void main(String[] args) throws NumberFormatException, IOException {
-        // 4
-        // 1 2
-        // 1 3
-        // 2 4
-        // 1 2 3 4
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         info = new ArrayList<>();
@@ -60,7 +55,6 @@ public class baekjoon16940_2 {
         while (!queue.isEmpty()) {
             int currentBfsNumber = queue.remove();
 
-            // 종료 조건
             int count = 0;
             for (Integer nextBfsNumber : info.get(currentBfsNumber)) {
                 if (!visit[nextBfsNumber]) {

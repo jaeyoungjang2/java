@@ -18,6 +18,7 @@ public class baekjoon13913_2 {
     private static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
+        // 문제 정보 입력
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         start = Integer.parseInt(st.nextToken());

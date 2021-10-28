@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 public class baekjoon2250_5 {
+    // 트리 구조 문제 풀이
     private static Map<String, Node2250> info;
     private static Width2250[] widthInfo;
     private static int order = 1;

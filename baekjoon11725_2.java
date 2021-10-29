@@ -2,20 +2,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class baekjoon11725_2 {
     public static void main(String[] args) throws IOException {
-        // 7
-        // 1 6
-        // 6 3
-        // 3 5
-        // 4 1
-        // 2 4
-        // 4 7
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());

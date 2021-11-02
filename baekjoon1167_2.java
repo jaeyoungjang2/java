@@ -2,14 +2,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class baekjoon1167_2 {
-    private static int[][] distancInfo;
-    // private static ArrayList<ArrayList<Integer>> edgeInfo;
+    private static ArrayList<ArrayList<NodeRelationInfo>> nodeRelationInfos;
     private static boolean[] visit;
     private static int maximumDistance = 0;
     private static int maximumDistanceNode = 0;
@@ -18,13 +16,12 @@ public class baekjoon1167_2 {
     public static void main(String[] args) throws NumberFormatException, IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
-        // edgeInfo = new ArrayList<>();
-        distancInfo = new int[n + 1][n + 1];
+        nodeRelationInfos = new ArrayList<>();
         visit = new boolean[n + 1];
 
-        // for (int i = 0; i < n + 1; i++) {
-        // edgeInfo.add(new ArrayList<>());
-        // }
+        for (int i = 0; i < n + 1; i++) {
+            nodeRelationInfos.add(new ArrayList<>());
+        }
 
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -35,9 +32,7 @@ public class baekjoon1167_2 {
                     break;
                 }
                 int distance = Integer.parseInt(st.nextToken());
-                distancInfo[node1][node2] = distance;
-                // edgeInfo.get(node1).add(node2);
-                // edgeInfo.get(node2).add(node1);
+                nodeRelationInfos.get(node1).add(new NodeRelationInfo(node2, distance));
             }
         }
 
@@ -52,35 +47,36 @@ public class baekjoon1167_2 {
     }
 
     private static void bfs1167_findMaximumDistance(int currentNode, int distance) {
-        Queue<NodeInfo> queue = new LinkedList<>();
-        queue.add(new NodeInfo(currentNode, 0));
+        Queue<NodeRelationInfo> queue = new LinkedList<>();
+        queue.add(new NodeRelationInfo(currentNode, distance));
 
         while (!queue.isEmpty()) {
-            NodeInfo node = queue.remove();
-            distance = node.distance;
-            currentNode = node.node;
+            NodeRelationInfo nodeRelationInfo = queue.remove();
+            currentNode = nodeRelationInfo.node;
+            distance = nodeRelationInfo.distance;
 
-            if (maximumDistance < distance) {
-                maximumDistance = distance;
-                maximumDistanceNode = currentNode;
-            }
+            for (NodeRelationInfo nextNodeRelationInfo : nodeRelationInfos.get(currentNode)) {
+                int nextNode = nextNodeRelationInfo.node;
+                int nextNodeDistance = nextNodeRelationInfo.distance;
 
-            for (int nextNode = 0; nextNode < n + 1; nextNode++) {
-                if (!visit[nextNode] && distancInfo[currentNode][nextNode] != 0) {
+                if (!visit[nextNode]) {
                     visit[nextNode] = true;
-                    int nextDistance = distance + distancInfo[currentNode][nextNode];
-                    queue.add(new NodeInfo(nextNode, nextDistance));
+                    queue.add(new NodeRelationInfo(nextNode, distance + nextNodeDistance));
+                    if (maximumDistance < distance + nextNodeDistance) {
+                        maximumDistance = distance + nextNodeDistance;
+                        maximumDistanceNode = nextNode;
+                    }
                 }
             }
         }
     }
 }
 
-class NodeInfo {
+class NodeRelationInfo {
     int distance;
     int node;
 
-    public NodeInfo(int node, int distance) {
+    public NodeRelationInfo(int node, int distance) {
         this.node = node;
         this.distance = distance;
     }
